@@ -6,7 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default function AddCar(props) {
+export default function EditCar(props) {
   const [car, setCar] = React.useState({
     brand: "",
     model: "",
@@ -19,6 +19,15 @@ export default function AddCar(props) {
 
   const handleClickOpen = () => {
     setOpen(true);
+    setCar({
+        brand: props.params.brand,
+        model: props.params.model,
+        color: props.params.color,
+        fuel: props.params.fuel,
+        year: props.params.year,
+        price: props.params.price
+    })
+    console.log(props.params);
   };
 
   const handleClose = () => {
@@ -26,17 +35,17 @@ export default function AddCar(props) {
   };
 
   const handleSave = () => {
-    props.addCar(car);
+    props.updateCar(props.params._links.car.href, car);
     setOpen(false);
   };
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        New Car
+      <Button size="small" onClick={handleClickOpen}>
+        Edit
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add Car</DialogTitle>
+        <DialogTitle>Edit Car</DialogTitle>
         <DialogContent>
           <TextField
             margin="dense"
